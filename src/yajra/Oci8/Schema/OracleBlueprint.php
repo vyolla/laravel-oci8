@@ -33,7 +33,13 @@ class OracleBlueprint extends Blueprint
      */
     protected function createIndexName($type, array $columns)
     {
-        $index = strtolower($this->prefix . $this->table . '_' . implode('_', $columns) . '_' . $type);
+        if($type != 'primary'){
+             $index = strtolower($this->prefix . $this->table . '_' . implode('_', $columns) . '_' . $type);
+        }
+        else
+        {
+            $index = strtolower('XPK' . $this->prefix . $this->table);
+        }
 
         // max index name length is 30 chars
         return substr(str_replace(['-', '.'], '_', $index), 0, 30);
